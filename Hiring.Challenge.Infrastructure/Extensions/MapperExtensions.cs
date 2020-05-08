@@ -32,9 +32,8 @@ namespace Hiring.Challenge.Infrastructure.Extensions
                 Id = model.Id,
                 ImageUrl = model.ImageUrl,
                 Url = model.Url,
-                Username = model.Username 
+                Username = model.Username
             };
-
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Hiring.Challenge.Tests
     public class RepositoryServiceTests : BaseTests
     {
         [Fact(DisplayName = "List Languages")]
-        public async Task GetListLanguages()
+        public void GetListLanguages()
         {
-            var languages = await RepositoryService.GetLanguagesAsync();
+            var languages = RepositoryService.GetLanguages();
 
             Assert.Equal(5, languages.Count());
         }

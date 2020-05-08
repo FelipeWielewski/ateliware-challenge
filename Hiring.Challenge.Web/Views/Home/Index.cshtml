@@ -1,8 +1,44 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    
 }
+<style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    .about
+    {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 90vh;
+    }
+
+    .about-info .form-group select
+    {
+        margin: 50px 0 10px 0;
+    }
+    .about-info .form-group button
+    {
+        width: 100%;
+        height: 50px;
+    }
+</style>
+
+<section class="about">
+    <div class="about-info">
+        <h1>Conheça os repositórios em destaque do GITHUB!</h1>
+        <div class="form-group">
+            <select id="selector-language" class="form-control" asp-items="ViewBag.Languages"></select>
+            <button class="btn btn-info" onclick="search()">Conhecer</button>
+        </div>
+    </div>
+</section>
+    
+@section Scripts 
+{
+    <script>
+        function search() {
+            var language = $("#selector-language").val()
+
+            window.location.href = "/" + language, true;
+        }
+    </script>
+}

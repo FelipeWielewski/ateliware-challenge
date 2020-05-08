@@ -8,7 +8,7 @@ namespace Hiring.Challenge.Domain.Interfaces
     public interface IRepositoryService
     {
         public ValueTask<RepositoryViewModel> GetAsync(Guid id);
-        public ValueTask<IEnumerable<string>> GetLanguagesAsync();
+        public IEnumerable<string> GetLanguages();
         public ValueTask<IEnumerable<RepositoryViewModel>> GetTopRepositoriesFromLanguageAsync(string language);
             
     }

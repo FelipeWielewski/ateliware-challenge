@@ -72,7 +72,6 @@ namespace Hiring.Challenge.Web
                 using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
                 {
                     var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                 }
             }

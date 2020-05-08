@@ -78,10 +78,9 @@ namespace Hiring.Challenge.Infrastructure.Repositories
                 LastUpdate = DateTime.Parse(model.Value<string>("updated_at"), CultureInfo.InvariantCulture),
                 Owner = new User
                 {
-                    Id = model.Value<int>("owner.id"),
-                    Username = model.Value<string>("owner.login"),
-                    ImageUrl = model.Value<string>("owner.avatar_url"),
-                    Url = model.Value<string>("owner.html_url")
+                    Username = model.Value<JToken>("owner").Value<string>("login"),
+                    ImageUrl = model.Value<JToken>("owner").Value<string>("avatar_url"),
+                    Url = model.Value<JToken>("owner").Value<string>("html_url")
                 }
             };
         }

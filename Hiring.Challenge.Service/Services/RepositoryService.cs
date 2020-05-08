@@ -24,12 +24,13 @@ namespace Hiring.Challenge.Business.Services
         public async ValueTask<RepositoryViewModel> GetAsync(Guid id)
         {
             var repository = await _context.Repositories
+                .Include(x => x.Owner)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return repository?.ToViewModel();
         }
 
-        public async ValueTask<IEnumerable<string>> GetLanguagesAsync()
+        public IEnumerable<string> GetLanguages()
         {
             var languages = _gitHubRepository.GetLanguages();
             
@@ -39,6 +40,7 @@ namespace Hiring.Challenge.Business.Services
         public async ValueTask<IEnumerable<RepositoryViewModel>> GetTopRepositoriesFromLanguageAsync(string language)
         {
             var repositories = await _context.Repositories
+                .Include(x => x.Owner)
                 .Where(x => x.Language == language)
                 .ToListAsync();
 

@@ -1,37 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Hiring.Challenge.Web.Models;
+using System.Linq;
+using Hiring.Challenge.Domain.Interfaces;
+using System;
 
 namespace Hiring.Challenge.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        readonly IRepositoryService _repositoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IRepositoryService repositoryService)
         {
-            _logger = logger;
+            _repositoryService = repositoryService;
         }
 
         public IActionResult Index()
         {
+            ViewBag.Languages = (_repositoryService.GetLanguages()).Select(x => new SelectListItem() { Text = x, Value = x }).ToList();
+
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet("/{language}")]
+        public async Task<IActionResult> List(string language)
         {
-            return View();
+            var repositories = await _repositoryService.GetTopRepositoriesFromLanguageAsync(language);
+            return View(repositories);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet("/{language}/{id}")]
+        public async Task<IActionResult> Info(string language, Guid id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var repository = await _repositoryService.GetAsync(id);
+            return View(repository);
         }
     }
 }
